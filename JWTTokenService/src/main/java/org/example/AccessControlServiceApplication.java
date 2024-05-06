@@ -11,6 +11,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
+import java.util.Arrays;
+
 @SpringBootApplication
 @EnableScheduling
 public class AccessControlServiceApplication implements CommandLineRunner {
@@ -29,5 +31,6 @@ public class AccessControlServiceApplication implements CommandLineRunner {
         String token = jwtTokenProvider.generateToken("admin_1", "ADMIN");
         char [] password = {'s', '9', 'K', 'H', '8', '1', 'h', 'O', 'T'};
         userRepository.save(new User("admin_1", password, "ADMIN", token, "1234567890"));
+        Arrays.fill(password, '\0');
     }
 }

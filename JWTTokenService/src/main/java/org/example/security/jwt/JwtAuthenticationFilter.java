@@ -1,5 +1,6 @@
 package org.example.security.jwt;
 
+import org.example.exception.CustomException;
 import org.example.model.User;
 import org.example.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,12 +50,17 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             filterChain.doFilter(request, response);
         } catch (Exception ex) {
             // Обработка ошибок аутентификации
-            logger.error("Authentication error: " + ex.getMessage());
-            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            response.setContentType("application/json");
-            String errorMessage = "{\"result\": \"Failed\", \"message\": \"" + ex.getMessage() + "\", \"errorCode\": \"" + "401" + "\"}";
-            response.getWriter().write(errorMessage);
+            handleAuthenticationError(response, ex);
         }
+    }
+
+    // Метод для обработки ошибок аутентификации
+    private void handleAuthenticationError(HttpServletResponse response, Exception ex) throws IOException {
+        logger.error("Authentication error: " + ex.getMessage());
+        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+        response.setContentType("application/json");
+        String errorMessage = "{\"result\": \"Failed\", \"message\": \"" + ex.getMessage() + "\", \"errorCode\": \"" + "401" + "\"}";
+        response.getWriter().write(errorMessage);
     }
 
     // Метод для извлечения токена из заголовка запроса
