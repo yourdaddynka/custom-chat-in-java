@@ -1,7 +1,10 @@
 package org.example;
 
 
-import org.example.security.JwtTokenProvider;
+import org.example.model.User;
+import org.example.repository.UserRepository;
+
+import org.example.security.jwt.JwtTokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -14,7 +17,7 @@ public class AccessControlServiceApplication implements CommandLineRunner {
     @Autowired
     private JwtTokenProvider jwtTokenProvider;
     @Autowired
-    private SecurityRepository securityRepository;
+    private UserRepository userRepository;
     public static void main(String[] args) {
         SpringApplication.run(AccessControlServiceApplication.class, args);
     }
@@ -24,7 +27,8 @@ public class AccessControlServiceApplication implements CommandLineRunner {
     }
 
     private void createAdminUser() {
-        String token = jwtTokenProvider.generateToken("1234567890", "ADMIN");
-        securityRepository.save(new Security("1234567890", token, "EMPLOYEE"));
+        String token = jwtTokenProvider.generateToken("admin_1", "ADMIN");
+        char [] password = {'s', '9', 'K', 'H', '8', '1', 'h', 'O', 'T'};
+        userRepository.save(new User("admin_1", password, "ADMIN", token, "1234567890"));
     }
 }
