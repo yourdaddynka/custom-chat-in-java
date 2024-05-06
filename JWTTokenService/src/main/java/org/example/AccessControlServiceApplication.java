@@ -25,7 +25,6 @@ public class AccessControlServiceApplication implements CommandLineRunner {
     public void run(String... args) throws Exception {
         createAdminUser();
     }
-
     private void createAdminUser() {
         String token = jwtTokenProvider.generateToken("admin_1", "ADMIN");
         char [] password = {'s', '9', 'K', 'H', '8', '1', 'h', 'O', 'T'};

@@ -136,7 +136,7 @@
                             <goal>repackage</goal>
                         </goals>
                         <configuration>
-                            <mainClass>com.otmetkaX.AccessControlServiceApplication</mainClass>
+                            <mainClass>org.example.AccessControlServiceApplication</mainClass>
                             <outputDirectory>./</outputDirectory>
                         </configuration>
                     </execution>

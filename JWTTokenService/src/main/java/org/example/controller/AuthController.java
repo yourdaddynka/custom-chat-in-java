@@ -11,6 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
+
+import static java.lang.System.out;
+
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
@@ -24,26 +28,33 @@ public class AuthController {
         this.jwtTokenProvider = jwtTokenProvider;
     }
 
-    @PostMapping("/register/phone")
+    @PostMapping("register/phone")
     public ResponseEntity<ResponseMessage> register(@RequestParam String login, @RequestParam char[] password,
                                                     @RequestParam String role, @RequestParam String phone,
                                                     @RequestParam int code) throws CustomException {
         String token = jwtTokenProvider.generateToken(login, role);
         User user = new User(login, password, role, token, phone);
-        userService.save(user, code);
-        ResponseMessage response = new
-                ResponseMessageObject("Success", null, 200, token,  new UserDto(user.getLogin(), user.getRole(), user.getPhone()));
-        return ResponseEntity.ok().body(response);
+        try {
+            userService.save(user, code);
+            return ResponseEntity.ok().body(
+                    new ResponseMessageObject("Success", null, 200, token,
+                            new UserDto(user.getLogin(), user.getRole(), user.getPhone())));
+        } finally {
+            Arrays.fill(password, '\0');
+        }
     }
 
-    @PostMapping("/login")
+    @PostMapping("login")
     public ResponseEntity<ResponseMessage> login(@RequestParam String login, @RequestParam char[] password) throws CustomException {
         User user = userService.findByLogin(login);
-        User.PasswordUtils.matches(password, user.getPassword());
-        User.PasswordUtils.clearPassword(password);
-        ResponseMessage response = new
-                ResponseMessageObject("Success", null, 200, user.getToken(), new UserDto(user.getLogin(), user.getRole(), user.getPhone()));
-        return ResponseEntity.ok().body(response);
+        try {
+            User.PasswordUtils.matches(password, user.getPassword());
+            return ResponseEntity.ok().body(
+                    new ResponseMessageObject("Success", null, 200, user.getToken(),
+                            new UserDto(user.getLogin(), user.getRole(), user.getPhone())));
+        } finally {
+            Arrays.fill(password, '\0');
+        }
     }
 
 

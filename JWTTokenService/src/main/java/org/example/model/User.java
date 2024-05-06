@@ -37,7 +37,7 @@ public class User {
 
     public User(String login, char[] password, String role, String token, String phone) {
         this.login = login;
-        this.password = password;
+        setPassword(password);
         this.role = role;
         this.token = token;
         this.phone = phone;
@@ -45,7 +45,7 @@ public class User {
 
     public void setPassword(char[] password) {
         this.password = PasswordUtils.encryptPassword(password);
-        PasswordUtils.clearPassword(password);
+        Arrays.fill(password, '\0');
     }
 
     public static class PasswordUtils {
@@ -56,14 +56,12 @@ public class User {
             return passwordEncoder.encode(new String(password)).toCharArray();
         }
 
-        // Метод для очистки пароля из памяти
-        public static void clearPassword(char[] password) {
-            Arrays.fill(password, '\0');
-        }
 
         // Метод для сравнения зашифрованного пароля с введенным пользователем
         public static void matches(char[] rawPassword, char[] encodedPassword) throws CustomException {
-            if (!passwordEncoder.matches(new String(rawPassword), new String(encodedPassword))) {
+            String rawPasswordString = new String(rawPassword);
+            String encodedPasswordString = new String(encodedPassword);
+            if (!passwordEncoder.matches(rawPasswordString, encodedPasswordString)) {
                 throw new CustomException("INVALID_PASSWORD", 401);
             }
         }

@@ -88,9 +88,9 @@ public class UserServiceImpl implements UserService {
     }
 
     private void validatePassword(char[] password) throws CustomException {
-        if (password.length < 8 || password.length > 20) {
-            throw new CustomException("PASSWORD_LENGTH_INVALID", 422);
-        }
+//        if (password.length < 8 || password.length > 20) {
+//            throw new CustomException("PASSWORD_LENGTH_INVALID", 422);
+//        }
     }
 
 }
