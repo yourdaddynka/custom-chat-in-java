@@ -32,9 +32,9 @@ public class AuthController {
     public ResponseEntity<ResponseMessage> register(@RequestParam String login, @RequestParam char[] password,
                                                     @RequestParam String role, @RequestParam String phone,
                                                     @RequestParam int code) throws CustomException {
-        String token = jwtTokenProvider.generateToken(login, role);
-        User user = new User(login, password, role, token, phone);
         try {
+            String token = jwtTokenProvider.generateToken(login, role);
+            User user = new User(login, password, role, token, phone);
             userService.save(user, code);
             return ResponseEntity.ok().body(
                     new ResponseMessageObject("Success", null, 200, token,
@@ -46,8 +46,8 @@ public class AuthController {
 
     @PostMapping("login")
     public ResponseEntity<ResponseMessage> login(@RequestParam String login, @RequestParam char[] password) throws CustomException {
-        User user = userService.findByLogin(login);
         try {
+            User user = userService.findByLogin(login);
             User.PasswordUtils.matches(password, user.getPassword());
             return ResponseEntity.ok().body(
                     new ResponseMessageObject("Success", null, 200, user.getToken(),

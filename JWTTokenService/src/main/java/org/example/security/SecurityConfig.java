@@ -16,7 +16,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers(HttpMethod.GET, "/api/auth/login").hasAnyRole( "EMPLOYEE")
+                .antMatchers(HttpMethod.POST, "/api/auth/login").hasAnyRole( "EMPLOYEE")
                 .antMatchers(HttpMethod.POST, "/api/auth/register/phone").permitAll()
                 .and()
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
