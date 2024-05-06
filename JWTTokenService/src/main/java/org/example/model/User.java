@@ -56,7 +56,6 @@ public class User {
             return passwordEncoder.encode(new String(password)).toCharArray();
         }
 
-
         // Метод для сравнения зашифрованного пароля с введенным пользователем
         public static void matches(char[] rawPassword, char[] encodedPassword) throws CustomException {
             String rawPasswordString = new String(rawPassword);
