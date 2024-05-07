@@ -8,6 +8,7 @@ import io.jsonwebtoken.security.Keys;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
+import javax.crypto.spec.SecretKeySpec;
 import java.util.Date;
 @Component
 public class JwtTokenProvider {
@@ -16,8 +17,12 @@ public class JwtTokenProvider {
     private final SecretKey secretKey;
 
     public JwtTokenProvider() {
-        // Генерация случайного секретного ключа для алгоритма HS512
-        this.secretKey = Keys.secretKeyFor(SignatureAlgorithm.HS512);
+        // Ваш секретный ключ (можно хранить в конфигурационном файле)
+        String secretKeyString = "brPbbhbYGG45DDDHyhgJvfgKIi234";
+
+        // Преобразование строки в секретный ключ
+        byte[] secretKeyBytes = secretKeyString.getBytes();
+        this.secretKey = new SecretKeySpec(secretKeyBytes, SignatureAlgorithm.HS512.getJcaName());
     }
 
     // Метод для генерации JWT токена на основе имени пользователя и роли
