@@ -2,6 +2,7 @@ package org.example.model;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.example.model.dto.SenderDto;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.annotation.Id;
@@ -14,14 +15,14 @@ public class Message {
     @Id
     private String id;
     private String content;
-    private String sender;
+    private SenderDto sender;
     @DBRef
     private Room room;
 
     public Message() {
     }
 
-    public Message(String content, String sender, Room room) {
+    public Message(String content, SenderDto sender, Room room) {
         this.content = content;
         this.sender = sender;
         this.room = room;
