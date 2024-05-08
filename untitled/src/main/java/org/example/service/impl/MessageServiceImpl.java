@@ -1,5 +1,6 @@
 package org.example.service.impl;
 
+
 import org.example.exception.CustomException;
 import org.example.model.Message;
 import org.example.repository.MessageRepository;
@@ -22,11 +23,11 @@ public class MessageServiceImpl implements MessageService {
     }
     @Override
     public Message findById(String id) throws CustomException {
-       Optional<Message> message = messageRepository.findById(id);
-       if(!message.isPresent()) {
+        Optional<Message> message = messageRepository.findById(id);
+        if(!message.isPresent()) {
             throw new CustomException("/topic/error", "MESSAGE_NOT_FOUND", id);
-       }
-       return message.get();
+        }
+        return message.get();
     }
 
     @Override

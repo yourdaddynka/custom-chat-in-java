@@ -8,13 +8,13 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import org.springframework.context.annotation.Bean;
 
-
 @SpringBootApplication
 public class AccessControlServiceApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(AccessControlServiceApplication.class, args);
     }
+
     @Bean
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)
@@ -23,5 +23,4 @@ public class AccessControlServiceApplication {
                 .paths(PathSelectors.any())
                 .build();
     }
-
 }

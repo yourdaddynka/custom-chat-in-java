@@ -1,0 +1,17 @@
+services:
+  mongo:
+    image: mongo
+    container_name: mongo_db
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: rhogoron
+      MONGO_INITDB_ROOT_PASSWORD: rhogoron
+    ports:
+      - "27017:27017"
+
+  adminer:
+    image: adminer
+    container_name: adminer_mongo
+    restart: always
+    ports:
+      - "8080:8080"

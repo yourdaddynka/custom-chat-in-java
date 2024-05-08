@@ -12,6 +12,7 @@
     <properties>
         <java.version>17</java.version>
         <spring-boot.version>2.7.0</spring-boot.version>
+        <spring-data-mongodb.version>3.4.18</spring-data-mongodb.version>
         <hibernate.version>5.6.0.Final</hibernate.version>
         <lombok.version>1.18.30</lombok.version>
         <javax.version>2.3.1</javax.version>
@@ -20,7 +21,6 @@
         <swagger.version>3.0.0</swagger.version>
         <postgresql.version>42.2.24</postgresql.version>
     </properties>
-
     <!-- Зависимости проекта -->
     <dependencies>
         <!-- Spring Boot Starter Data JPA -->
@@ -30,7 +30,7 @@
             <version>${spring-boot.version}</version>
         </dependency>
 
-        <!-- Spring Boot Starter Web -->
+<!--        &lt;!&ndash; Spring Boot Starter Web &ndash;&gt;-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
@@ -44,7 +44,7 @@
             <version>${spring-boot.version}</version>
         </dependency>
 
-        <!-- Spring Boot Starter Security -->
+<!--        &lt;!&ndash; Spring Boot Starter Security &ndash;&gt;-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
@@ -64,14 +64,6 @@
             <artifactId>jaxb-api</artifactId>
             <version>${javax.version}</version>
         </dependency>
-
-        <!-- PostgreSQL JDBC Driver -->
-        <dependency>
-            <groupId>org.postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-            <version>${postgresql.version}</version>
-        </dependency>
-
 
         <!-- lombok get set -->
         <dependency>
@@ -106,15 +98,18 @@
             <artifactId>springfox-boot-starter</artifactId>
             <version>${swagger.version}</version>
         </dependency>
+
         <dependency>
             <groupId>org.springframework.integration</groupId>
             <artifactId>spring-integration-core</artifactId>
-            <version>6.2.4</version>
+            <version>5.5.2</version> <!-- Укажите актуальную версию -->
         </dependency>
+
+
         <dependency>
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-mongodb</artifactId>
-            <version> 3.2.1</version>
+            <version>${spring-data-mongodb.version}</version>
         </dependency>
 
 

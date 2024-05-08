@@ -1,5 +1,6 @@
 package org.example.security.jwt;
 
+
 import org.example.model.dto.SenderDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
