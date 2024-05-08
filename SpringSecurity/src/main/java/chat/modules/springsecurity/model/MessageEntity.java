@@ -18,5 +18,4 @@ public class MessageEntity {
     private String roomName;
     private String senderName;
     private LocalDateTime timestamp;
-
 }
