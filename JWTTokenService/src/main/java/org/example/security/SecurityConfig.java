@@ -18,6 +18,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/api/auth/login").hasAnyRole( "EMPLOYEE")
                 .antMatchers(HttpMethod.POST, "/api/auth/register/phone").permitAll()
+                .antMatchers(HttpMethod.PUT, "/api/auth/refresh-token").permitAll()
                 .and()
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .csrf()

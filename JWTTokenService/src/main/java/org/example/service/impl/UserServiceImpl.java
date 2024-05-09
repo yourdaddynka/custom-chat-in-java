@@ -38,6 +38,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User refreshToken(String token, String refreshToken) throws CustomException {
+        User user = findByToken(token);
+        user.setToken(refreshToken);
+        userRepository.save(user);
+        return findByToken(refreshToken);
+    }
+
+    @Override
     public User findByToken(String token) throws CustomException {
         Optional<User> user = userRepository.findByToken(token);
         if (!user.isPresent()) {

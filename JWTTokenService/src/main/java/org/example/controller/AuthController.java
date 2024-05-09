@@ -58,4 +58,17 @@ public class AuthController {
     }
 
 
+    @PutMapping("/refresh-token")
+    public ResponseEntity<ResponseMessage> refreshToken(@RequestHeader("Authorization") String authorizationHeader) throws CustomException {
+        String jwtToken = authorizationHeader.replace("Bearer ", "");
+        String login = jwtTokenProvider.getUsernameFromToken(jwtToken);
+        String role = jwtTokenProvider.getRoleFromToken(jwtToken);
+        String refreshToken = jwtTokenProvider.generateToken(login, role);
+        User user = userService.refreshToken(jwtToken, refreshToken);
+        return ResponseEntity.ok().body(
+                new ResponseMessageObject("Success", null, 200, user.getToken(),
+                        new UserDto(user.getLogin(), user.getRole(), user.getPhone())));
+
+    }
+
 }
