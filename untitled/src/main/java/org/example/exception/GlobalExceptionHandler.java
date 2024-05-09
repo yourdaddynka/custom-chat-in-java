@@ -23,7 +23,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(CustomException.class)
     public void handleCustomException(CustomException ex) {
         ResponseMessage response = new ResponseMessage(ex.getMessage(), new SenderDto(ex.getSender(), null));
-//        messagingTemplate.convertAndSend(ex.getDestination(), response);
+        messagingTemplate.convertAndSend(ex.getDestination(), response);
     }
 
 }
