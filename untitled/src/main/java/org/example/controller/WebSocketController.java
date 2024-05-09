@@ -16,9 +16,13 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 
 import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.RequestParam;
+
 import java.security.Principal;
 
 import java.security.Principal;
+
+import static java.lang.System.out;
 
 //@PreAuthorize("hasRole('ROLE_ADMIN')")
 @Controller
@@ -34,10 +38,18 @@ public class WebSocketController {
     private SimpMessagingTemplate messagingTemplate;
 
     @MessageMapping("/ws/create-room")
-    public void createRoom(@Payload String roomName, @Payload String senderName) {
-        Room room = new Room(roomName, senderName);
-        roomService.saveRoom(room);
-        messagingTemplate.convertAndSend("/topic/room-created", room);
+    public void createRoom(@RequestParam("roomName") String roomName, Principal principal) {
+        out.println(roomName);
+        if (principal instanceof Authentication) {
+            Authentication authentication = (Authentication) principal;
+            String jwtToken = (String) authentication.getCredentials();
+            String senderName = jwtTokenProvider.getUsernameFromToken(jwtToken);
+            Room room = new Room(roomName, senderName);
+            roomService.saveRoom(room);
+            messagingTemplate.convertAndSend("/topic/room/" + room.getId(), room);
+        }
+
+        messagingTemplate.convertAndSend("/topic/", "error");
     }
 
     @MessageMapping("/ws/socket/send-message/{roomId}")

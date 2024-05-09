@@ -16,7 +16,7 @@ public class JwtTokenProvider {
 
     public JwtTokenProvider() {
         // Ваш секретный ключ (можно хранить в конфигурационном файле)
-        String secretKeyString = "2yWX%8FhB1z!KQd@P3mZvA$LgXnSjWn";
+        String secretKeyString = "2yWX%8FhB1z!KQd@P3mZvfA$LgXnSjWn";
 
         // Преобразование строки в секретный ключ
         byte[] secretKeyBytes = secretKeyString.getBytes();

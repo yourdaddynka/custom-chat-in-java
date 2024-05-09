@@ -19,6 +19,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
+import static java.lang.System.out;
+
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
@@ -33,13 +35,17 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private SimpMessagingTemplate messagingTemplate;
 
     @Override
-    protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
         try {
+            out.println("1111");
             // Извлечение токена из запроса
-            String token = extractTokenFromRequest((HttpServletRequest) httpServletRequest);
+            String token = extractTokenFromRequest((HttpServletRequest) request);
+            out.println(token);
             if (token != null) {
                 String role = jwtTokenProvider.getRoleFromToken(token);
+                out.println(role);
                 String userName = jwtTokenProvider.getUsernameFromToken(token);
+                out.println(userName);
                 SenderDto user = new SenderDto(userName, role);
                 if (user != null) {
                     // Создание объекта аутентификации с ролями пользователя
@@ -51,7 +57,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 }
             }
             // Продолжение цепочки фильтров
-            filterChain.doFilter(httpServletRequest, httpServletResponse);
+            filterChain.doFilter(request, httpServletResponse);
         } catch (Exception ex) {
             messagingTemplate.convertAndSend("/topic/error", ex.getMessage());
             // Обработка ошибок аутентификации
@@ -70,9 +76,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     // Метод для извлечения токена из заголовка запроса
     private String extractTokenFromRequest(HttpServletRequest request) {
-        String header = request.getHeader("Authorization");
-        if (header != null && header.startsWith("Bearer ")) {
-            return header.substring(7);
+        String token = request.getParameter("access_token");
+        if (token != null) {
+            return token;
         }
         return null;
     }

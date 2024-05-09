@@ -9,6 +9,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import static java.lang.System.out;
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
@@ -18,7 +20,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain configure(HttpSecurity http) throws Exception {
         http.authorizeRequests((requests) -> requests
-                        .antMatchers("/ws/**").permitAll() // Use antMatchers instead of requestMatchers
+                        .antMatchers("/ws/create-room").permitAll() // Use antMatchers instead of requestMatchers
                         .anyRequest()
                         .authenticated())
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
