@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
 
-import static java.lang.System.out;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -56,7 +55,6 @@ public class AuthController {
             Arrays.fill(password, '\0');
         }
     }
-
 
     @PutMapping("/refresh-token")
     public ResponseEntity<ResponseMessage> refreshToken(@RequestHeader("Authorization") String authorizationHeader) throws CustomException {

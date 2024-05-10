@@ -22,7 +22,8 @@ import java.util.List;
 import static java.lang.System.out;
 
 @Component
-public class JwtAuthenticationFilter extends OncePerRequestFilter {
+public class JwtAuthenticationFilter extends OncePerRequestFilter
+{
 
     private final JwtTokenProvider jwtTokenProvider;
 

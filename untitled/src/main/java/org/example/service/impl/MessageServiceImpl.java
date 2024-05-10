@@ -21,6 +21,7 @@ public class MessageServiceImpl implements MessageService {
     public void save(Message message) {
         messageRepository.save(message);
     }
+
     @Override
     public Message findById(String id) throws CustomException {
         Optional<Message> message = messageRepository.findById(id);

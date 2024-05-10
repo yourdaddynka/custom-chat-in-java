@@ -25,4 +25,5 @@ public class AccessControlServiceApplication {
                 .paths(PathSelectors.any())
                 .build();
     }
+
 }
