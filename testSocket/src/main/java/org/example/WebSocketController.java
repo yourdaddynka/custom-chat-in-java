@@ -1,24 +1,19 @@
 package org.example;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 
-import static java.lang.System.out;
 
 @Controller
 public class WebSocketController {
 
-
-    // Аннотация @MessageMapping указывает на метод, который обрабатывает входящие сообщения по указанному адресу
     @MessageMapping("/hello")
-    // Аннотация @SendTo указывает, куда отправлять ответное сообщение
     @SendTo("/topic/greetings")
-    public String greeting() throws Exception {
-        out.println("1111");
-        // Просто формируем ответное сообщение, здесь может быть любая ваша логика обработки
-        return "hello";
+    public String greeting(String message) throws Exception {
+        System.out.println();
+        System.out.println("Received message: " + message);
+        System.out.println();
+        return message;
     }
 }

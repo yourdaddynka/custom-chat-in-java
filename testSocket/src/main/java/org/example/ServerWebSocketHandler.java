@@ -1,10 +1,13 @@
 package org.example;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.*;
 
 @Component
 public class ServerWebSocketHandler implements WebSocketHandler {
+    @Autowired
+    private WebSocketController webSocketController;
 
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
@@ -16,7 +19,11 @@ public class ServerWebSocketHandler implements WebSocketHandler {
     @Override
     public void handleMessage(WebSocketSession session, WebSocketMessage<?> message) throws Exception {
         System.out.println("Received message from " + session.getId() + ": " + message.getPayload());
-        // Здесь можно обработать входящее сообщение от клиента
+        String payload = (String) message.getPayload();
+        System.out.println("payload -- " + payload);
+        String response = webSocketController.greeting(payload); // Вызываем метод контроллера для обработки сообщения
+        System.out.println("response -- " + response);
+        session.sendMessage(new TextMessage(response)); // Отправляем ответ обратно клиенту
     }
 
     @Override
