@@ -1,13 +1,16 @@
 package org.example;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.*;
+import org.springframework.web.socket.handler.TextWebSocketHandler;
+
 
 @Component
 public class ServerWebSocketHandler implements WebSocketHandler {
     @Autowired
-    private WebSocketController webSocketController;
+    private SimpMessagingTemplate messagingTemplate;
 
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
@@ -18,12 +21,19 @@ public class ServerWebSocketHandler implements WebSocketHandler {
 
     @Override
     public void handleMessage(WebSocketSession session, WebSocketMessage<?> message) throws Exception {
-        System.out.println("Received message from " + session.getId() + ": " + message.getPayload());
         String payload = (String) message.getPayload();
-        System.out.println("payload -- " + payload);
-        String response = webSocketController.greeting(payload); // Вызываем метод контроллера для обработки сообщения
-        System.out.println("response -- " + response);
-        session.sendMessage(new TextMessage(response)); // Отправляем ответ обратно клиенту
+        String uriPath = session.getUri().getPath();
+        String acceptedProtocol = uriPath.substring(uriPath.indexOf("websocket") + "websocket".length());
+
+//        System.out.println("acceptedProtocol -- " + acceptedProtocol);
+//        System.out.println("Received message from " + session.getId() + ": " + message.getPayload());
+//        System.out.println("payload -- " + payload);
+
+
+        System.out.println("acceptedProtocol -- " + acceptedProtocol + " payload -- " + payload);
+        String destination = "/topic" + acceptedProtocol;
+        System.out.println("destination -- " + destination);
+        messagingTemplate.convertAndSend(destination, payload);
     }
 
     @Override

@@ -24,6 +24,11 @@
     </properties>
     <!-- Зависимости проекта -->
     <dependencies>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-messaging</artifactId>
+            <version>5.3.14</version> <!-- Версия может отличаться в зависимости от вашего проекта -->
+        </dependency>
 
         <!--        &lt;!&ndash; Spring Boot Starter Web &ndash;&gt;-->
         <dependency>
