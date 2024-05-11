@@ -6,6 +6,8 @@ import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 
+import static java.lang.System.out;
+
 @Controller
 public class WebSocketController {
 
@@ -15,6 +17,7 @@ public class WebSocketController {
     // Аннотация @SendTo указывает, куда отправлять ответное сообщение
     @SendTo("/topic/greetings")
     public String greeting() throws Exception {
+        out.println("1111");
         // Просто формируем ответное сообщение, здесь может быть любая ваша логика обработки
         return "hello";
     }

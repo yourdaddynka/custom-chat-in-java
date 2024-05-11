@@ -5,35 +5,15 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.messaging.simp.config.MessageBrokerRegistry;
 import org.springframework.web.socket.WebSocketHandler;
-import org.springframework.web.socket.config.annotation.EnableWebSocket;
-import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
-import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry;
-
-//@Configuration
-//@EnableWebSocket
-//public class WebSocketConfig implements WebSocketConfigurer {
-//
-//    @Override
-//    public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-//        registry.addHandler(webSocketHandler(), "/websocket");
-//    }
-//
-//    @Bean
-//    public WebSocketHandler webSocketHandler() {
-//        return new ServerWebSocketHandler();
-//    }
-//
-//    @Bean
-//    public SimpMessagingTemplate messagingTemplate(SimpMessagingTemplate simpMessagingTemplate) {
-//        return simpMessagingTemplate;
-//    }
-//}
+import org.springframework.web.socket.config.annotation.*;
 
 
 @Configuration
 @EnableWebSocket
 public class WebSocketConfig implements WebSocketConfigurer {
+
 
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
@@ -45,3 +25,4 @@ public class WebSocketConfig implements WebSocketConfigurer {
         return new ServerWebSocketHandler();
     }
 }
+
