@@ -1,5 +1,6 @@
 package org.letishal.springsecurityandauthenticator.service;
 
+import org.letishal.springsecurityandauthenticator.models.Client;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

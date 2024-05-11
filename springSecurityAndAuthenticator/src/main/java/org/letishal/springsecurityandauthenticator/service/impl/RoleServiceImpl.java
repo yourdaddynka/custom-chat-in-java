@@ -1,7 +1,5 @@
 package org.letishal.springsecurityandauthenticator.service.impl;
 
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
 import org.letishal.springsecurityandauthenticator.models.Role;
 import org.letishal.springsecurityandauthenticator.repository.RoleRepository;
 import org.letishal.springsecurityandauthenticator.service.RoleService;
@@ -11,9 +9,8 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@RequiredArgsConstructor
-public class RoleRepositoryImpl implements RoleService<Role, Long> {
-    @NonNull RoleRepository repository;
+public class RoleServiceImpl implements RoleService<Role, Long> {
+     RoleRepository repository;
 
     @Override
     public Optional<List<Role>> findAll() {return Optional.of(repository.findAll());}

@@ -1,9 +1,9 @@
 package org.letishal.springsecurityandauthenticator.service;
 
-import org.letishal.springsecurityandauthenticator.models.Client;
+import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+@Service
 public interface ClientService<T,ID> extends EntityService<T,ID>{
-    Optional<T> findByUserName(String userName);
-}
+    Optional<T> findByUserName(String userName);}

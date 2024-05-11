@@ -4,15 +4,15 @@ import lombok.AccessLevel;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import org.letishal.springsecurityandauthenticator.service.EntityService;
 import org.letishal.springsecurityandauthenticator.repository.EntityRepository;
+import org.letishal.springsecurityandauthenticator.service.EntityService;
 
 import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class EntityRepositoryImpl<T, ID> implements EntityService<T, ID> {
+public class EntityServiceImpl<T, ID> implements EntityService<T, ID> {
     @NonNull
     EntityRepository<T, ID> repository;
 
@@ -35,4 +35,5 @@ public class EntityRepositoryImpl<T, ID> implements EntityService<T, ID> {
     public void remove(ID id) {
         repository.deleteById(id);
     }
+
 }
