@@ -61,7 +61,12 @@ public class WebSocketController {
         out.println("message == " + message + ", roomId == " + roomId + ", principal == " + principal);
         if (principal instanceof Authentication) {
             Authentication authentication = (Authentication) principal;
-            authentication.getPrincipal();
+            if (authentication.getPrincipal() instanceof SenderDto) {
+                SenderDto senderDto = (SenderDto) authentication.getPrincipal();
+                String userName = senderDto.getName();
+                String userRole = senderDto.getRole();
+                out.println("userName == " + userName + " userRole == " + userRole);
+
 //            Authentication authentication = (Authentication) principal;
 //            String jwtToken = (String) authentication.getCredentials();
 //            String userName = jwtTokenProvider.getUsernameFromToken(jwtToken);
@@ -70,8 +75,8 @@ public class WebSocketController {
 //            Message messageUser = new Message(message, new SenderDto(userName, userRole), room);
 //            messageService.save(messageUser);
 //            messagingTemplate.convertAndSend("/topic/room/" + roomId, messageUser);
+            }
+            messagingTemplate.convertAndSend("/topic/room/" + roomId, "error");
         }
-        messagingTemplate.convertAndSend("/topic/room/" + roomId, "error");
     }
-
 }
