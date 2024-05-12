@@ -41,15 +41,15 @@ public class WebSocketController {
 
     @MessageMapping("/chat.createRoom/{roomName}")
     @SendTo("/topic/public")
-    public void createRoom( @org.springframework.messaging.handler.annotation.DestinationVariable String roomName, Principal principal) {
+    public void createRoom( @org.springframework.messaging.handler.annotation.DestinationVariable String roomName, Principal principal) throws CustomException {
         out.println("roomName == " + roomName + ", principal == " + principal);
         if (principal instanceof Authentication) {
-            Authentication authentication = (Authentication) principal;
-            String jwtToken = (String) authentication.getCredentials();
-            String senderName = jwtTokenProvider.getUsernameFromToken(jwtToken);
-            Room room = new Room(roomName, senderName);
-            roomService.saveRoom(room);
-            messagingTemplate.convertAndSend("/topic/room/" + room.getId(), room);
+//            Authentication authentication = (Authentication) principal;
+//            String jwtToken = (String) authentication.getCredentials();
+//            String senderName = jwtTokenProvider.getUsernameFromToken(jwtToken);
+//            Room room = new Room(roomName, senderName);
+//            roomService.saveRoom(room);
+//            messagingTemplate.convertAndSend("/topic/room/" + room.getId(), room);
         }
 
         messagingTemplate.convertAndSend("/topic/", "error");
@@ -61,13 +61,15 @@ public class WebSocketController {
         out.println("message == " + message + ", roomId == " + roomId + ", principal == " + principal);
         if (principal instanceof Authentication) {
             Authentication authentication = (Authentication) principal;
-            String jwtToken = (String) authentication.getCredentials();
-            String userName = jwtTokenProvider.getUsernameFromToken(jwtToken);
-            String userRole = jwtTokenProvider.getRoleFromToken(jwtToken);
-            Room room = roomService.findById(roomId);
-            Message messageUser = new Message(message, new SenderDto(userName, userRole), room);
-            messageService.save(messageUser);
-            messagingTemplate.convertAndSend("/topic/room/" + roomId, messageUser);
+            authentication.getPrincipal();
+//            Authentication authentication = (Authentication) principal;
+//            String jwtToken = (String) authentication.getCredentials();
+//            String userName = jwtTokenProvider.getUsernameFromToken(jwtToken);
+//            String userRole = jwtTokenProvider.getRoleFromToken(jwtToken);
+//            Room room = roomService.findById(roomId);
+//            Message messageUser = new Message(message, new SenderDto(userName, userRole), room);
+//            messageService.save(messageUser);
+//            messagingTemplate.convertAndSend("/topic/room/" + roomId, messageUser);
         }
         messagingTemplate.convertAndSend("/topic/room/" + roomId, "error");
     }
