@@ -38,7 +38,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
         try {
-            out.println("1111");
             // Извлечение токена из запроса
             String token = extractTokenFromRequest((HttpServletRequest) request);
             out.println(token);
@@ -75,10 +74,16 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter
         response.getWriter().write(errorMessage);
     }
 
-    // Метод для извлечения токена из заголовка запроса
     private String extractTokenFromRequest(HttpServletRequest request) {
-        String token = request.getParameter("access_token");
-        if (token != null) {
+        String token = request.getParameter("token");
+        if (token == null) {
+            token = request.getHeader("Authorization");
+            if (token != null && token.startsWith("Bearer ")) {
+                token =  token.substring(7);
+            }
+        }
+        out.println("token == " + token);
+        if (token != null && !token.isEmpty()) {
             return token;
         }
         return null;
