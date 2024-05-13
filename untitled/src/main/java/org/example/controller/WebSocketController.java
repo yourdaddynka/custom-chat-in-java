@@ -42,8 +42,9 @@ public class WebSocketController {
                 SenderDto senderDto = (SenderDto) authentication.getPrincipal();
                 String senderName = senderDto.getName();
                 Room room = new Room(roomName, senderName);
-//                roomService.saveRoom(room);
-                messagingTemplate.convertAndSend("/topic/room/" + room.getId(), room);
+                Room roomSaved = roomService.saveRoom(room);
+                out.println("roomSaved = " + roomSaved.getId() + " " + roomSaved.getName());
+                messagingTemplate.convertAndSend("/topic/room/" + roomSaved.getId(), roomSaved);
             }
         }
         messagingTemplate.convertAndSend("/topic/", "error");
@@ -64,7 +65,7 @@ public class WebSocketController {
                 out.println("room == " + room.getName());
                 Message messageUser = new Message(message, new SenderDto(userName, userRole), room);
 
-//                messageService.save(messageUser);
+                messageService.save(messageUser);
                 messagingTemplate.convertAndSend("/topic/room/" + roomId, messageUser);
             }
             messagingTemplate.convertAndSend("/topic/room/" + roomId, "error");

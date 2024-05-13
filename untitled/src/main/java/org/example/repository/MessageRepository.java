@@ -9,6 +9,8 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface MessageRepository extends MongoRepository<Message, String> {
+    @Override
+    Message save(Message entity);
     Page<Message> findByRoomId(String roomId, Pageable pageable);
     void deleteByRoomId(String id);
 

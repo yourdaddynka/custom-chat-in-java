@@ -19,8 +19,8 @@ public class RoomServiceImpl implements RoomService {
     private MessageRepository messageRepository;
 
     @Override
-    public void saveRoom(Room room) {
-        roomRepository.save(room);
+    public Room saveRoom(Room room) {
+         return roomRepository.save(room);
     }
 
     @Override
