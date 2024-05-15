@@ -8,17 +8,14 @@ import org.example.model.dto.SenderDto;
 
 @Getter
 @Setter
-@JsonInclude(JsonInclude.Include.NON_NULL)
 public class ResponseMessage {
-    @JsonProperty("sender")
-    private SenderDto sender;
-
-    @JsonProperty("message")
+    private Object object;
+    private Boolean successes;
     private String message;
 
-    public ResponseMessage(String message,  SenderDto sender) {
+    public ResponseMessage(Object object, Boolean successes, String message) {
+        this.object = object;
+        this.successes = successes;
         this.message = message;
-        this.sender = sender;
     }
-
 }

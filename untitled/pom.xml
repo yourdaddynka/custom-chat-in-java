@@ -24,6 +24,8 @@
     </properties>
     <!-- Зависимости проекта -->
     <dependencies>
+
+
         <!-- Spring Boot Starter Data JPA -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
