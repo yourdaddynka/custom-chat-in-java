@@ -10,15 +10,22 @@ import org.example.model.dto.SenderDto;
 @Setter
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ResponseMessage {
-    @JsonProperty("sender")
-    private Object object;
-    @JsonProperty("successes")
-    private Boolean successes;
+    @JsonProperty("status")
+    private String status;
+
+    @JsonProperty("code")
+    private int code;
+
     @JsonProperty("message")
     private String message;
-    public ResponseMessage(Object object, Boolean successes, String message) {
-        this.object = object;
-        this.successes = successes;
+
+    @JsonProperty("jwtToken")
+    private Object object;
+
+    public ResponseMessage(String status, String message, int code, Object object) {
+        this.status = status;
+        this.code = code;
         this.message = message;
+        this.object = object;
     }
 }

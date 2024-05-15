@@ -27,7 +27,7 @@ public class RoomServiceImpl implements RoomService {
     public Room findById(String id) throws CustomException {
         Optional<Room> room = roomRepository.findById(id);
         if(!room.isPresent()) {
-            throw new CustomException("/topic/error", "ROOM_NOT_FOUND", id);
+            throw new CustomException("ROOM_NOT_FOUND", 404);
         }
         return room.get();
     }

@@ -27,7 +27,7 @@ public class MessageServiceImpl implements MessageService {
     public Message findById(String id) throws CustomException {
         Optional<Message> message = messageRepository.findById(id);
         if(!message.isPresent()) {
-            throw new CustomException("/topic/error", "MESSAGE_NOT_FOUND", id);
+            throw new CustomException("MESSAGE_NOT_FOUND", 404);
         }
         return message.get();
     }

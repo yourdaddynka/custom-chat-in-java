@@ -30,7 +30,7 @@ public class JwtTokenProvider {
                     .parseClaimsJws(token);
             return claims.getBody().getSubject();
         } catch (JwtException ex) {
-            throw new CustomException("/topic/error" , "TOKEN_NOT_VALID", token);
+            throw new CustomException("TOKEN_NOT_VALID", 404);
         }
     }
 
@@ -43,7 +43,7 @@ public class JwtTokenProvider {
                     .parseClaimsJws(token);
             return (String) claims.getBody().get("role");
         } catch (JwtException ex) {
-            throw new CustomException("/topic/error" , "TOKEN_NOT_VALID", token);
+            throw new CustomException("TOKEN_NOT_VALID", 404);
         }
     }
 }
