@@ -1,6 +1,5 @@
 package org.example.controller;
 
-import lombok.extern.slf4j.Slf4j;
 import org.example.exception.CustomException;
 import org.example.model.Message;
 import org.example.model.Room;
@@ -14,10 +13,10 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
-import org.springframework.messaging.simp.annotation.SendToUser;
 import org.springframework.stereotype.Controller;
 import org.springframework.security.core.Authentication;
 import java.security.Principal;
+
 
 //@PreAuthorize("hasRole('ROLE_ADMIN')")
 @Controller
@@ -38,7 +37,6 @@ public class WebSocketController {
                 String senderName = senderDto.getName();
                 Room room = new Room(roomName, senderName);
                 Room roomSaved = roomService.saveRoom(room);
-//                System.out.println("----------------------------");
 //                messagingTemplate.convertAndSend("/topic/queue/response", roomSaved);
                 return roomSaved;
             }
@@ -47,7 +45,7 @@ public class WebSocketController {
     }
 
     @MessageMapping("/chat.sendMessage/{roomId}")
-    @SendTo("/queue/response")
+    @SendTo("/topic/queue/response")
     public ResponseMessage sendMessage(@Payload String message, @DestinationVariable String roomId, Principal principal) throws CustomException {
         System.out.println("message == " + message + ", roomId == " + roomId + ", principal == " + principal);
         if (principal instanceof Authentication authentication) {
@@ -57,7 +55,6 @@ public class WebSocketController {
                 Room room = roomService.findById(roomId);
                 Message messageUser = new Message(message, new SenderDto(userName, userRole), room);
                 Message messageSaved = messageService.save(messageUser);
-                System.out.println("----------------------------");
                 return new ResponseMessage(messageSaved, true, null);
             }
         }
