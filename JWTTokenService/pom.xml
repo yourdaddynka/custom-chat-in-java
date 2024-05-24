@@ -30,6 +30,13 @@
             <version>${spring-boot.version}</version>
         </dependency>
 
+        <!-- Spring Boot Starter Data redis -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+            <version>${spring-boot.version}</version>
+        </dependency>
+
         <!-- Spring Boot Starter Web -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
