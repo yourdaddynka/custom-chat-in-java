@@ -11,13 +11,9 @@ import java.util.Date;
 @Component
 public class JwtTokenProvider {
 
-    // Секретный ключ для подписи и проверки JWT токенов
     private final SecretKey secretKey;
-
     public JwtTokenProvider() {
-        // Ваш секретный ключ (можно хранить в конфигурационном файле)
         String secretKeyString = "2yWX%8FhB1z!KQd@P3mZvfA$LgXnSjWn";
-
         // Преобразование строки в секретный ключ
         byte[] secretKeyBytes = secretKeyString.getBytes();
         this.secretKey = new SecretKeySpec(secretKeyBytes, SignatureAlgorithm.HS512.getJcaName());
@@ -25,7 +21,6 @@ public class JwtTokenProvider {
 
     // Метод для генерации JWT токена на основе имени пользователя и роли
     public String generateToken(String login, String role) {
-        // Установка текущей даты и времени
         Date now = new Date();
         // Рассчет времени истечения срока действия токена (24 часа после текущего времени)
         Date expiryDate = new Date(now.getTime() + 24 * 60 * 60 * 1000);
